@@ -1,0 +1,11 @@
+name: Workflow Wisdom
+markdown: redcarpet
+highlighter: pygments
+url: http://dvbuntu.github.com/wisdom
+description: Computing Workflows, Data Science, and such
+baseurl: /wisdom
+
+permalink: /:year/:month/:day/:title/
+paginate: 5
+
+exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']

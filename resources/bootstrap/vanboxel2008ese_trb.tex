@@ -1,0 +1,221 @@
+\documentclass[titlepage,12pt,times,nopageno]{article}
+%\usepackage{ulem}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\pagestyle{myheadings}%suppress page numbers and allow for custom header
+\markboth{\thepage}{\normalfont Van Boxel and Schneider}%{right head} {left head} that's really stupid
+\usepackage[numbers]{natbib} %When combined with elsart-num, gives () instead of [] cites.  Good for author-date format.
+%Add [numbers] to natbib package to get [1] and Boomsma [1] type
+%\usepackage{savetrees}%Reduces white space by sacrificing looks
+\usepackage[hmargin=1in,vmargin=1in]{geometry}
+\usepackage{ccaption}%add the stuff to each figure
+\begin{document}
+\title{\normalsize An Empirical Study Using Limited Sample Size Crash Data on the Effect of Utilizing Bootstrapping Techniques on the Predictive Power of Negative Binomial Models}
+\author{\normalsize Daniel Van Boxel \\ 
+\normalsize dpv3@uakron.edu \\
+\normalsize Phone: 440.477.6374 \\
+\\
+\normalsize William H. Schneider* \\
+\normalsize whs4@uakron.edu \\
+\normalsize Phone: 330.972.2426 \\
+\normalsize Fax: 330.972.6020
+}
+\date{\normalsize Department of Civil Engineering \\
+\normalsize The University of Akron \\
+\normalsize Akron, OH 44325 \\\begin{flushleft}
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\normalsize Number of Tables = 1 @ 250 = 250 words\\
+\normalsize Number of Figures = 1 @ 250 = 250 words\\
+\normalsize Number of Words = 3916 + 250 + 250 = 4416\\
+\bigskip
+\normalsize Submission Date: August 1st, 2008\\
+\vfill
+\normalsize *Denotes Corresponding Author
+\end{flushleft}}
+%\begin{titlepage}  To design own custom title page, but have to do formatting by hand...lame.
+%\end{titlepage}
+\maketitle
+\begin{abstract}
+This study makes an assessment of the effectiveness of bootstrapping when using empirical samples of various sizes.  In particular, Mean Absolute Errors (MAE) of crash count predictions is examined using a separate validation dataset.  In addition to MAEs, $\beta$ parameters and the dispersion terms are analyzed with respect to various sample sizes.  The final models show that bootstrapping is quite effective at reducing MAE for small sample sizes while improvement over maximum likelihood estimates diminish with increased sample sizes.  Other findings within the research show $\beta$ coefficients, dispersion terms and the standard deviation of each of these parameters become more stable and consistently estimated when increasing either the number of bootstrapped iterations or the initial sample size.
+\end{abstract}
+\section*{\label{sec:intro}\normalsize INTRODUCTION}
+The impact of highway safety analysis continues to improve as a result of new statistical techniques in association with more advanced computers and computer software.  Today there are many types of statistical techniques that are used to predict either the number of crashes as seen by the Poisson and negative binomial models both with and without Bayesian methods.  Driver injury-severity probabilities may also be calculated through a series of discrete choice models including both open and closed forms.  While other researchers have developed models to predict accident rates as seen through the Tobit model \citep{anas2008tav} or adaptive trees \citep{karlaftis2002erg}.\par
+        In each of these cases, the final models are greatly influenced by the level of data that is currently available.  In some cases the data may be more available for example the impact of single vehicle injury producing crashes on urban arterials.  On the other hand the data may be harder to find, for example the impact of increasing/decreasing roundabout radii on injury producing crashes.  Additional areas of research that require more data include the development of new accident modification factors that will be used in future versions of the Highway Safety Manual.  As a result of these needs and the potential limitations that are associated with empirical datasets, new statistical methods are currently being developed to improve the overall predictive powers of the above mentioned model forms.  One potential area for improvement is the use of a data mining or more specifically the implementation of bootstrapping models especially with small datasets.  The overall goal of the bootstrapping procedure is to improve the overall predictive power of the model.
+\section*{\normalsize OBJECTIVES}
+In particular, this study seeks to explore the predictive power of negative binomial models is affected by sample size in bootstrapping.  This will include examining the dispersion term as well as magnitude of prediction errors on a validation data set.  Comparing NB models across sample size and number of bootstrapping iterations will provide information on improvements bootstrapping may have over maximum likelihood estimation (MLE)
+\section*{\normalsize LITERATURE REVIEW}
+Several researchers have employed negative binomial models to model accident counts.  \citet{miaou1993rbt} modeled truck accident counts, comparing Poisson, Zero-Inflated Poisson, and negative binomial estimations.  Considering intersections, \citet{poch1996nba} also used a negative binomial model.  They further note that crash count data is typically overdispersed; the variance of the dependent is greater than the mean.  Including segments as well as intersections, \citet{vogt1998amt} also used a negative binomial model to predict accident counts.  They mention that negative binomial is specifically formulated to address the overdispersion present in accident count data.  A more recent study \cite{zhang2007edp} examined negative binomial models with accident counts as part of an investigation of the dispersion term, $\alpha$, and bootstrapping methods.  They discuss how the variance of $\alpha$ estimates is reduced substantially by using bootstrapping methods.\par
+Bootstrapping is perhaps less common than running negative binomial models on accident data, though the two are not mutually exclusive.  \citet{zhang2007edp} as well as \citet{lord2006mmv} have thoroughly investigated the effect of bootstrapped negative binomial on the dispersion term, noting that bootstrapped estimates of $\alpha$ typically have smaller variances than those estimated without bootstrapping.  \citet{keall2005mec} estimated the standard errors of coefficients when considering the impact of BAC in crashes.  \citet{heitjan1991mif} also looked at BAC and included bootstrapping as part of the methodology.  One study using bootstrapping to investigate the uncertainty of estimated birth model parameters was conducted by \citet{vadeby2004mrc}.  
+\section*{\label{sec:data}\normalsize DATA DESCRIPTION}
+The dataset developed for this study is compiled from two sources.  The first source is the vehicle crash reports that are provided by the Ohio Department of Public Safety (DPS) and the second source is the Ohio Department of Transportation Roadway Inventory (RI) files.  The RI files include information on the roadway geometry, average daily traffic, and functional classification.  The two datasets are merged together based on location and the final dataset provides information on the accident counts as well as the geometrics.  The final dataset is comprises data from the years 2002 through 2006.  This dataset includes all motor vehicle crashes related to single and multi-vehicle crashes on horizontal curves.\par
+To consider both the impact of sample size as well as bootstrapping, two parameters are varied among the models in the bootstrapping procedure.  The first is size of the bootstrapped sample.  This is chosen as 10, 25, 50, or 80\% of the available data.  To draw these sizes, one assigns a variable, $\kappa_i$, to each training observation such that
+\begin{equation}
+\kappa_i=Rand[U(0,1)] \label{eqn:kappa}
+\end{equation}
+where $U(0,1)$ is the uniform distribution between zero and one. "Rand" designates that a random value from this distribution is chosen.  To choose the actual fraction of the training sample to consider in each bootstrap iteration, one designates another value, $\nu$, which is the fraction to keep.  That is, one uses only those observations that satisfy
+\begin{equation}
+\kappa_i<\nu \label{eqn:nu}
+\end{equation}
+For example, to use 50\% of the training data in a particular iteration, one specifies $\nu=0.5$.  One must be careful, however, to generate neww $\kappa$'s for each sampling to ensure truly random selection.  Removing part of the dataset mimics real world situations where only a portion of the data set may be relevant.  For example, a crash dataset may contain several types of crash such as rear-end, run-off road, etc, but the researcher may only be interested in modeling one particular type.\par
+The exact same rules described in Equations \ref{eqn:kappa} and \ref{eqn:nu} can be used to initially separate the total data set into a training set for parameter estimation and a validation set for checking predictive power.  To create a training set that comprises 80\% of the total data, new $\kappa$'s are generated and $\nu$ is set to 0.8.  This ensures that the data against which the model parameters are evaluated are consistent and not also included in the training set.\par
+\section*{\label{sec:method}\normalsize METHODOLOGY}
+The negative binomial model is an extension of the Poisson model and has the following function form \citep{washington2003sae}:
+\begin{equation}
+\lambda_i=e^{\beta X_i+\epsilon_i} \label{eqn:nb}
+\end{equation}
+where $\lambda_i$ is the total accident count on roadway segment $i$, $\beta$ is a vector of estimable parameters, $X_i$ is a vector of independent variables such as roadway geometry and traffic counts, and $e^{\epsilon_i}$ is the gamma-distributed error term that has a mean equal to 1 and a variance of $\alpha^2$.  Now consider the negative binomial distribution:
+\begin{equation}
+P(y_i)=\frac{\Gamma((1/\alpha)+y_i)}{\Gamma(1/\alpha)y_i!}\left(\frac{1/\alpha}{(1/\alpha)+\lambda_i}\right)^{1/\alpha}\left(\frac{\lambda_i}{(1/\alpha)+\lambda_i}\right)^{y_i} \label{eqn:prob}
+\end{equation}
+\citet{washington2003sae} notes that this leads to a likelihood function of
+\begin{equation}
+L(\lambda_i)=\prod_i\frac{\Gamma((1/\alpha)+y_i)}{\Gamma(1/\alpha)y_i!}\left(\frac{1/\alpha}{(1/\alpha)+\lambda_i}\right)^{1/\alpha}\left(\frac{\lambda_i}{(1/\alpha)+\lambda_i}\right)^{y_i} \label{eqn:like}
+\end{equation}
+to be maximized in numerical estimation procedures.\par
+\begin{figure}[h]
+\centering
+  \captionnamefont{\bfseries}
+  \captiontitlefont{\normalsize \bfseries}
+  \captiondelim{ }
+  \renewcommand{\figurename}{FIGURE}
+\includegraphics{boot}
+	\caption{The bootstrap method randomly redraws from the available training dataset to estimate $\beta$.}
+	\label{fig:boot}
+\end{figure}
+The bootstrapping method was originally developed by \citet{efron1979bma}.  Essentially, bootstrapping iteratively resamples some fraction, $\nu$, of the available dataset $B$ times, calculating the parameter of interest, perhaps MAE, each time.  Then the bootstrapped estimation is the mean of these values:
+\begin{equation}
+MAE_{boot}=(1/B)\sum_{j=1}^B MAE_j \label{eqn:bootmae}
+\end{equation}
+Similarly, the variance (square of standard deviation) of the bootstrapped parameter is \citep{hastie2001esl}:
+\begin{equation}
+\sigma^2=\frac{1}{B-1}\sum_{j=1}^B (MAE_{boot}-MAE_j)^2 \label{eqn:varboot}
+\end{equation}
+\citet{hastie2001esl} notes that there are several options to measure model prediction error with bootstrapped estimators.  They mention techniques such as ``leave-one-out'', where the error is calculated against the observations not included in that particular iteration sample.  This becomes:
+\begin{equation}
+\widehat{Err}=\frac{1}{N}\sum_{i=1}^N \frac{1}{|C^{-1}|}\sum_{b\in C^{-i}}L(y_i,y_{pred}) \label{eqn:errboot}
+\end{equation}
+where $C^{-1}$ are the indices of bootstrap samples that do not contain the $i$th observation and $|C^{-1}|$ is the number of samples satisfying that \citep{hastie2001esl}.  However, \citet{hastie2001esl} also mention that a superior measure of error is to withhold data from the estimation completely in the form of a validation set.  Then the error can be calculated using the bootstrapped model parameters to compared predicted counts with the validation set as in Equation \ref{eqn:mae}.  This ensures that one avoids potential bias from repeating bootstrap observations in the error calculation observation.\par
+This study compares three different values among the models.   The first parameter employs the validation set.  Let the mean absolute error (MAE) of a particular bootstrapped model be
+\begin{equation}
+MAE=\frac{1}{n}\sum_{i=1}^n \left| f_i-y_i\right| \label{eqn:mae}
+\end{equation}
+where $n$ is the number of observations in the validation set, $f_i$ is the predicted number of crashs on roadway segment $i$, and $y_i$ is the actual number crashs.  These predictions are made for the validation set by using the estimated $\beta$ coefficients from the training set.\par
+The other two parameters are simply the dispersion term, $\alpha$, and one of the $\beta$-coefficients.\par
+To assess the impact of sample size and bootstrapping on these parameters, one can consider these parameters from two perspectives.  The first is just a direct comparison of values.  For each sample size, one can plot the parameter against the number of bootstrap iterations.  To examine relative effects, however, one can normalize each parameter.  In this study, each parameter is normalized as a percentage above or below the value derived from the 80\% training sample size at each number of bootstrap iterations.  For MAEs, this states
+\begin{equation}
+MAE_{norm}=\frac{MAE_i}{MAE_{80\%}}-1 \label{eqn:normmae}
+\end{equation}
+Therefore, all of the MAEs using 100 bootstrap iterations are normalized to the MAE$_80\%$ that used 100 bootstrap iterations.  Other normalized parameters are calculated the same way as Equation \ref{eqn:normmae}, just with ``MAE'' replaced with teh parameter of interest.\par
+The second perspective more closely examines the consistency of various estimates derived at a particular sample size.  Plotting the standard deviation of a parameter as estimated at a particular sample size is one way to do this.  Again, however, the concern is not the actual standard deviation, but the relative differences.  Each calculated standard deviation is therefore expressed as a percent of the mean of the parameter for that sample size.  Using MAEs, this reduces to
+\begin{equation}
+\sigma_{norm}^{MAE}=\frac{\sigma_{MAE}}{\mu_{MAE}} \label{eqn:stdevmae}
+\end{equation}
+Note that whereas Equation \ref{eqn:normmae} normalizes at each number of bootstrap iterations, Equation \ref{eqn:stdevmae} normalizes at each sample size.  Doing the latter allows one to plot non-bootstrapped values on the same graph.  This provides further comparison between MLE and bootstrapping methods.
+\section*{\label{sec:results}\normalsize RESULTS}
+\begin{figure}[t]
+\centering
+  \captionnamefont{\bfseries}
+  \captiontitlefont{\normalsize \bfseries}
+  \captiondelim{ }
+  \renewcommand{\figurename}{FIGURE}
+\includegraphics[scale=0.5]{normmae}
+	\caption{The normalized MAE values converge with increasing number bootstrap iterations.}
+	\label{fig:normmae}
+\end{figure}
+\begin{figure}[ht]
+\centering
+  \captionnamefont{\bfseries}
+  \captiontitlefont{\normalsize \bfseries}
+  \captiondelim{ }
+  \renewcommand{\figurename}{FIGURE}
+\includegraphics[scale=0.5]{stdevmae}
+	\caption{The normalized MAE values converge with increasing number bootstrap iterations.}
+	\label{fig:stdevmae}
+\end{figure}
+As noted above, this study investigates three different normalized parameters as well as their normalized standard deviations.  Figures \ref{fig:normmae} through \ref{fig:stdevbeta} provide a broad view of these values.\par
+The normalized Mean Absolute Error is a measure of predictive power.  Smaller values indicate a better overall prediction of crash counts.  Figure \ref{fig:normmae} shows some of the trends of the normalized MAE.  Especially at a small number of bootstrap iterations, the 10\% and 25\% sample size models tend to have substantially higher MAE.  With 10 iterations, the 10\% sample size model has almost 9\% higher MAE and than the 80\% sample size model.  Similarly, with 5 iterations, the 25\% sample size model has a 3\% greater MAE.  Also, the 50\% sample size model deviates from the 80\% sample size model by at most just over 2\% in terms of MAE.  Figure \ref{fig:stdevmae}, the normalized standard deviation, also shows some interesting trends.  When bootstrapping, using a larger sample size improves the consistency of estimates by about 3\%.  Without bootstrapping, the improvement is more noticeable at 6\%.  Also, at any given sample size, bootstrapping appears to reduce the standard deviation of MAE.  Using 10\% of the sample, the difference between bootstrapping and regular Maximum Likelihood Estimation (MLE) is 4\%.  Finally, with larger sample sizes, the bootstrapped and MLE consistencies begin to converge together.\par
+\begin{figure}[h]
+\centering
+  \captionnamefont{\bfseries}
+  \captiontitlefont{\normalsize \bfseries}
+  \captiondelim{ }
+  \renewcommand{\figurename}{FIGURE}
+\includegraphics[scale=0.5]{normk}
+	\caption{The normalized MAE values converge with increasing number bootstrap iterations.}
+	\label{fig:normk}
+\end{figure}
+\begin{figure}[h]
+\centering
+  \captionnamefont{\bfseries}
+  \captiontitlefont{\normalsize \bfseries}
+  \captiondelim{ }
+  \renewcommand{\figurename}{FIGURE}
+\includegraphics[scale=0.5]{stdevk}
+	\caption{The normalized MAE values converge with increasing number bootstrap iterations.}
+	\label{fig:stdevk}
+\end{figure}
+Smaller values of the $\alpha$ parameter indicate less dispersion, suggesting that the variance-to-mean ratio decreases and that the model becomes more like a Poisson model.  Figure \ref{fig:normk} shows magnitude and shape similar to that of the MAEs in Figure \ref{fig:normmae}.  As dispersion does not measure predictive power, however, the concern is only with magnitude of difference, not with if $\alpha$ is larger or smaller than the baseline.  With 5 bootstrap iterations, the 10\% sample size model has a $\alpha$ value almost 8\% smaller than than the 80\% sample size model.  As with MAEss, all the $\alpha$'s tend to converge to a single value with an increasing number of bootstrap iterations.  Figure \ref{fig:stdevk} is also somewhat similar to its MAE counterpart, Figure \ref{fig:stdevmae}.  When bootstrapping, the improvement of consistency of dispersion estimates is less than 2\% from the smallest to largestt sample size.  The improvement of bootstrapping over MLE, however, is much more pronounced with $\alpha$ than with MAE.  Here, there is over a 10\% difference at the 10\% sample size.  At 25\% sample size, the difference is still 6\%.  Also like with MAE, the consistency of bootstrapping and MLE converges with increasing sample size.\par
+\begin{figure}[h]
+\centering
+  \captionnamefont{\bfseries}
+  \captiontitlefont{\normalsize \bfseries}
+  \captiondelim{ }
+  \renewcommand{\figurename}{FIGURE}
+\includegraphics[scale=0.5]{normbeta}
+	\caption{The normalized MAE values converge with increasing number bootstrap iterations.}
+	\label{fig:normbeta}
+\end{figure}
+\begin{figure}[ht]
+\centering
+  \captionnamefont{\bfseries}
+  \captiontitlefont{\normalsize \bfseries}
+  \captiondelim{ }
+  \renewcommand{\figurename}{FIGURE}
+\includegraphics[scale=0.5]{stdevbeta}
+	\caption{The normalized MAE values converge with increasing number bootstrap iterations.}
+	\label{fig:stdevbeta}
+\end{figure}
+The last parameter considered is $\beta_3$, chosen as typical of the various $\beta$'s.  Again Figure \ref{fig:normbeta} resembles its MAE and $\alpha$ counterpart graphs.  The smaller sample size estimates tend to be most different from the baseline.  The estimation here, however, appears somewhat more robust as even using 10\% of the sample results in differences of less than 4\% from the baseline.  Again, however, increasing the number of bootstrap iterations causes the estimates to converge.  The standard deviation plot, Figure \ref{fig:stdevbeta}, shows the typical trends in the other figures.  As with $\alpha$, there is not much improvement in consistency with sample size when bootstrapping.  But by switching from MLE to bootstrapping, one sees as much as 7\% improvement in consistency.\par
+These are just some of the potential comparisons one can make with the above models.  Certainly, a researcher can more closely examine particular variables or other unused parameters.  The values presented here are only the author's choices among many possibilities.
+\section*{\normalsize CONCLUSIONS}
+This study builds negative binomial models to fit empirical crash data drawn from a training set comprising Ohio's rural non-interstate roads.  Using different sample sizes, model parameters were estimated with both MLE and bootstrapping methods.  The bootstrapped parameters then predict crash counts for a validation set withheld from the estimation.  Other estimated parameters such as dispersion,$\alpha$, and $\beta_3$ were also tracked.  Figures \ref{fig:normmae} through \ref{fig:stdevbeta} plot them for comparison across sample size and number of bootstrap iterations.\par
+With small sample sizes, bootstrapping is particularly effective.  From Figure \ref{fig:normmae}, one sees the normalized MAE generally decreasing with more bootstrap iterations, especially for the 10 and 25\% sample size models.  For the other parameters, using more boot strap iterations tightens the range of estimates.  From the figures, it appears as though most of this tightening occurs by using at least 100 bootstrap iterations.  This corroborates with \citet{greene2007limdep}, who suggests that using between 50 to 100 bootstrap iterations is usually sufficient.  Also, considering the impact of bootstrapping versus plain MLE, there is a substantial increase in the consistency of both parameter estimates and MAE.  At larger sample sizes, however, these improvements are much less pronounced.  Even for the smallest sample fraction presented, these improvements may seem mediocre.  This ``small'' sample, however, has over 1200 observations, still a substantial number.  For even smaller samples, such as those considered by \citet{zhang2007edp}, the improvements may be more dramatic.  Examining MAEs at such levels would be an insightful area of further research.\par
+\section*{\normalsize ACKNOWLEDGMENTS}
+The authors of this paper would like to thank the Ohio Department of Transportation and the Ohio Department of Public Safety for the research data provided for this study.  The research was performed by the University of Akron.  The contents of this paper reflect the views of the authors, who are responsible for the facts and the accuracy of the data presented herein.  The contents do not necessarily reflect the official views or polices of ODOT, ODPS or FHWA.  
+\newpage
+%For generating the bibliography
+%\bibliographystyle{elsart-num}
+\section*{\normalsize REFERENCES}
+\def\section*#1{}%suppreses remaining section headings
+\bibliographystyle{unsrtnat}
+\bibliography{vanboxel2008taibib}
+%For publication, copy the output of the .aux file
+%Should look like...
+%\begin{thebibliography}{2}
+%
+%\bibitem[{Denallo(2007)}]{Denallo}
+%Denallo, M., 2007.
+%
+%\bibitem[{Gerber et~al.(2003)Gerber, Hasselblatt, and Keesing}]{Riccati}
+%Gerber, M., Hasselblatt, B., Keesing, D., 2003. The riccati equation: Pinching
+%  of forcing and solutions. Experimental Mathematics 12~(2), 129--134.
+%
+%\end{thebibliography}
+
+%Can have figures at end or in text, but probably won't have any in this paper
+%\begin{figure}[p]
+% \centering
+% \includegraphics*{fig12}
+%\caption[Free Body Diagram of Canoe]{The dynamic Free Body Diagram of an arbitrary section of the concrete canoe in motion.}
+%\label{FBD}
+%\end{figure}
+
+%Tables at end, include as separate .tex file.  Can build within Kile, then copy code to new file
+%\begin{table}[p] \label{values}
+%\caption[Values]{Numerical Values of Constants}
+%\include{table1}
+%\end{table}
+\end{document}

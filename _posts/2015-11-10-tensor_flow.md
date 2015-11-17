@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Critique of a Mediocre Thesis
+title: TensorFlow Installation Stream
 cover: none.png
-date: 2015-10-13 12:21:21 
+date: 2015-11-13 12:21:21 
 categories: posts, stream, tensor flow, machine learning
 ---
 

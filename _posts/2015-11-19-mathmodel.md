@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Book Review: An Introduction to Mathematical Modeling
+title: "Book Review: An Introduction to Mathematical Modeling"
 cover: none.png
 date: 2015-11-19 19:02:12 
 categories: posts, review, math model

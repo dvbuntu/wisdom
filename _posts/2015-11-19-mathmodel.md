@@ -6,7 +6,9 @@ date: 2015-11-19 19:02:12
 categories: posts, review, math model
 ---
 
-### [An Introduction to Mathematical Modeling by Edward A. Bender](https://books.google.com/books?id=adf515kSDOkC)
+### [![An Introduction to Mathematical Modeling by Edward A. Bender](http://ecx.images-amazon.com/images/I/41BC3H33BML._SX282_BO1,204,203,200_.jpg)](https://books.google.com/books?id=adf515kSDOkC)
+
+
 
 Let me preface this review by saying that I'm biased; this is one of my favorite books.  Not just favorite math text, but overall favorite.  This is one of the few books that I've read multiple times.  It's also from 1978, but I've seen used copies for sale on many websites.  And finally, it clocks at a binary satisfying 256 pages.
 

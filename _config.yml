@@ -9,3 +9,5 @@ permalink: /:year/:month/:day/:title/
 paginate: 5
 
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
+
+google_analytics_key: UA-57362708-3

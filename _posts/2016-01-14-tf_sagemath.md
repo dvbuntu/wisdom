@@ -1,3 +1,11 @@
+---
+layout: post
+title: TensorFlow in SageMathCloud
+cover: none.png
+date:  2016-01-14 21:23:00
+categories: posts, python, sagemathcloud, tensorflow
+---
+
 # Installing TensorFlow in SageMathCloud
 TensorFlow isn't always the most friendly library to install, but within [SageMathCloud](cloud.sagemath.com) for a CPU-only version and Python3.4, it's not too bad.  Most of the pain comes from SageMathCloud cutting off our network access.
 

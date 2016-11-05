@@ -7,6 +7,8 @@ I'm **Dan Van Boxel**, mild-mannered data scientist by day, and snarky critiquer
 
 I stream on [YouTube Live](http://www.youtube.com/c/DanVanBoxel/live) every Tuesday evening 6-7 PM Eastern.  Watch me bumble through machine learning software tutorials like TensorFlow, Theano, and Torch.  It's like "Let's Play" for data analysis.
 
+Check out my [Video Course](https://www.packtpub.com/big-data-and-business-intelligence/deep-learning-tensorflow-video) on learning [TensorFlow](https://www.tensorflow.org/) for machine learning.  It teaches you TensorFlow by working through a novel font recognition project created just for this course.
+
 I am also available for data consulting for projects large and small.  In particular, I love to teach people how to improve their workflow.  I want to help your corporate division, new startup, or graduate department.  If there's a topic you'd like me to discuss or a diatribe you have to send me, feel free to drop me a line at <mailto:the.dvb@gmail.com>.  
 
 This site is built using [Jekyll](https://jekyllrb.com/) with posts written in [MarkDown](https://en.wikipedia.org/wiki/Markdown).  Comments are provided by [Disqus](https://disqus.com/), while video streaming is on Google Hangouts or UStream (with videos saved to Youtube for later viewing).

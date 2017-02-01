@@ -4,6 +4,7 @@ highlighter: pygments
 url: http://dvbuntu.github.com/wisdom
 description: Computing Workflows, Data Science, and such
 baseurl: /wisdom
+future: true
 
 permalink: /:year/:month/:day/:title/
 paginate: 5

@@ -1,5 +1,5 @@
 name: Dan Does Data
-markdown: redcarpet
+markdown: kramdown
 highlighter: pygments
 url: http://dvbuntu.github.com/wisdom
 description: Computing Workflows, Data Science, and such

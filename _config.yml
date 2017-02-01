@@ -1,6 +1,6 @@
 name: Dan Does Data
 markdown: kramdown
-highlighter: pygments
+highlighter: rouge
 url: http://dvbuntu.github.com/wisdom
 description: Computing Workflows, Data Science, and such
 baseurl: /wisdom

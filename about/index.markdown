@@ -3,9 +3,9 @@ layout: default
 title: About
 ---
 
-I'm **Dan Van Boxel**, mild-mannered data scientist by day, and snarky critiquer by night.  I cut my statistical chops on [econometric models for transportation data analysis](https://engineering.purdue.edu/~flm/CE614%2813%29.htm) before "data science" was a hot buzzword.  This is my little corner of the Internet to examine recent statistical research, stream new interactive workflow techniques, demonstrate data science frameworks, and sometimes even muse on other topics.  Hopefully we all learn something!
+I'm **Danielle Van Boxel**, mild-mannered data scientist by day, and snarky critiquer by night.  I cut my statistical chops on [econometric models for transportation data analysis](https://engineering.purdue.edu/~flm/CE614%2813%29.htm) before "data science" was a hot buzzword.  Now I'm a [PhD student at the University of Arizona Applied Math Program](https://appliedmath.arizona.edu/person/danielle-van-boxel).  This is my little corner of the Internet to examine recent statistical research, stream new interactive workflow techniques, demonstrate data science frameworks, and sometimes even muse on other topics.  Hopefully we all learn something!
 
-I stream on [YouTube Live](http://www.youtube.com/c/DanVanBoxel/live) every Tuesday evening 6-7 PM Eastern.  Watch me bumble through machine learning software tutorials like TensorFlow, Theano, and Torch.  It's like "Let's Play" for data analysis.
+I used to stream on [YouTube Live](http://www.youtube.com/c/DanVanBoxel/live) every Tuesday evening 6-7 PM Eastern.  Watch me step through machine learning software tutorials like TensorFlow, Theano, and Torch.  It's like "Let's Play" for data analysis.
 
 Check out my [Video Course](https://www.packtpub.com/big-data-and-business-intelligence/deep-learning-tensorflow-video) on learning [TensorFlow](https://www.tensorflow.org/) for machine learning.  It teaches you TensorFlow by working through a novel font recognition project created just for this course.
 
